@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Ham - BankAddress</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 user-scalable=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+  </head>
+  <body>
+    <div class="uk-container-fluid uk-background-primary" uk-height-viewport>
+      <div class="main-form uk-container uk-position-center">
+        <form action="/bankAddress" method="post">
+          <div class="uk-margin">
+            <select name="country" class="uk-select">
+              <option value="usa">United State of America</option>
+              <option value="ng">Nigeria</option>
+            </select>
+          </div>
+        
+          <div class="uk-margin">
+            <select name="bank_name" class="uk-select">
+              <option value="fcmb">First City Momenument Bank</option>
+              <option value="gtb">GT Bank</option>
+            </select>
+          </div>
+          
+          <div class="uk-margin">
+            <input type="number" name="acc_no" class="uk-input" placeholder="Account Number">
+          </div>
+
+          <button type="submit" class="uk-button uk-width-1-1">Get Address</button>
+        </form>
+      </div>
+    </div>
+
+    {% if session['walletaddress'] %}
+
+      <div id="address_alert" class="uk-flex-top uk-modal uk-flex uk-open" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+          <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-2-3">
+              <input id="hamaddress_input" class="uk-input" value="{{ session['walletaddress'] }}">
+            </div>
+            <div class="uk-width-2-3">
+              <button type="button" onclick="inputToClipboard(event.target.offsetParent.offsetParent.querySelector('#hamaddress_input'))" class="uk-button uk-button-primary"><span uk-icon="link"></span> Copy</button>
+            </div>
+          </div>
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+        </div>
+      </div>
+
+    {% endif %}
+
+
+    <script type="text/javascript">
+      function inputToClipboard(x) {
+        console.log(x);
+        //var copyText = document.getElementById("myInput");
+        x.select();
+        x.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        alert("Copied the text: " + x.value);
+      }
+    </script>
+    
+  </body>
+</html>
